@@ -1,0 +1,33 @@
+# Template de Commit Message
+# Formato: <type>(<scope>): <subject>
+#
+# Tipos:
+#   feat     - Nova funcionalidade
+#   fix      - Correção de bug
+#   refact   - Refatoração de código
+#   style    - Mudanças de estilo/formatação
+#   test     - Adição ou correção de testes
+#   docs     - Documentação
+#   build    - Mudanças no sistema de build
+#   ci       - Mudanças em CI/CD
+#   perf     - Melhorias de performance
+#
+# Scopes:
+#   auth, session, i18n, ui, validations, http, logger
+#   admin, users, turmas, memberships, audit, metrics
+#
+# Exemplos:
+#   feat(auth): implementa sistema de login
+#   fix(users): corrige validação de email
+#   refact(ui): extrai componentes reutilizáveis
+
+<type>(<scope>): <subject>
+
+# Descrição detalhada das mudanças
+# - Implementa funcionalidade X
+# - Adiciona validação Y
+# - Corrige problema Z
+# - Inclui testes para cenário A
+
+# Referências de issues (opcional)
+# refs #123

@@ -1,0 +1,44 @@
+---
+alwaysApply: true
+---
+
+### Objetivo
+
+Padronizar obtenção/mutação de dados no frontend do Gateway priorizando Server Fetch/Actions e usando TanStack Query apenas quando necessário em telas admin altamente interativas.
+
+### Server-first
+
+- Padrão: fazer fetch no server (Server Components) com cache, `revalidate` e `tags` do Next.
+- Mutations: preferir Server Actions ou Route Handlers (back-channel com o Auth), sem expor tokens ao client.
+- Em telas admin que exigem interatividade cliente (filtros, paginação dinâmica, otimizações): usar TanStack Query.
+
+### TanStack Query (cliente)
+
+- Usar `useQuery`/`useSuspenseQuery` apenas quando há real ganho de UX/latência no client.
+- Definir `queryKey` por domínio (ex.: `adminUsers.keys.list(params)` e `detail(id)`).
+- Invalidar com precisão após mutações: `queryClient.invalidateQueries(adminUsers.keys.list())`.
+- Mutações client-side só quando necessário; preferir Server Actions. Se usar, empregar optimistic update + rollback.
+
+### Route Handlers (server)
+
+- Cada handler valida sessão via cookies (HttpOnly) e retorna 401 quando inválido.
+- Orquestrar chamadas a serviços. Não conter regra de negócio.
+- Serializar respostas com utilitário do projeto antes do `NextResponse.json`.
+- Erros: retornar `{ error: string }` com status HTTP adequado. Logar erro no server, mensagem genérica no cliente.
+
+### Serviços (server)
+
+- Serviços de backend são chamados via Auth Gateway; no frontend, centralizar chamadas no handler/action.
+- Expor tipos de entrada/saída explícitos (ex.: `CreateEntityData`, `EntityWithRelations`).
+- Calcular agregações no server (ex.: totais) para evitar custo no cliente.
+
+### Server Actions
+
+- Preferir Server Actions quando possível para formulários (`<form action={formAction}>`).
+- Validar com Zod, retornar `fieldErrors` no estado da Action, e redirecionar via `redirect()` após sucesso.
+- Fazer checagens de unicidade antes de persistir (ex.: `checkAtributeExists`).
+
+### Serialização
+
+- Garantir que respostas já estejam serializadas e tipadas ao sair de handlers/actions.
+- Tipos `Serialized*` devem refletir a forma pós-serialização e ser reutilizados em hooks.

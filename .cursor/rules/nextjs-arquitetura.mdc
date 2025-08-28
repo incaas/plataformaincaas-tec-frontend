@@ -1,0 +1,39 @@
+---
+alwaysApply: true
+---
+
+### Objetivo
+
+Padronizar a arquitetura do frontend do Gateway (Next.js App Router) priorizando Server Components, separação clara entre UI/dados/regra de negócio, segurança de sessão e alta performance.
+
+### Regras
+
+- **Server-first**: componentes são Server por padrão. Use `"use client"` apenas para UI interativa (eventos, estado local).
+- **Camadas**:
+  - **UI**: `app/**` e `components/**` cuidam de renderização e composição.
+  - **Dados**: usar Server fetch/Actions como padrão; TanStack Query apenas em telas admin muito interativas.
+  - **Serviços (server)**: `app/api/**/route.ts` e Server Actions orquestram chamadas ao Auth (back-channel), validam sessão e respondem.
+  - **Validações**: `lib/validations/**` com Zod; tipos em `lib/types.ts`.
+- **Rotas/API (handlers)**: `app/api/auth/*` e `app/api/admin/*` implementam login, select, exchange, refresh e logout sempre no server.
+- **Providers**: `components/query-provider.tsx` somente nas páginas que realmente usam TanStack Query.
+- **SSR/Suspense**: usar `<Suspense>` com skeletons adequados.
+- **Navegação**: `Link` do Next; redireções server-side com `redirect()`.
+
+### Quando usar Client Components
+
+- Interação com formulários, inputs, máscara de dados, controladores de UI (dialogs, dropdowns, modais) e hooks do TanStack Query quando adotado.
+- Evite promover árvores inteiras a client; isole no mínimo necessário.
+
+### Organização de features
+
+- Agrupar por domínio: `app/<feature>/*`, `hooks/<feature>/*` (apenas quando houver client caching), `lib/validations/<feature>.ts`.
+- Para o Gateway: features principais são `auth` (login/select), `admin/{users,turmas,memberships,audit}`.
+
+### Erros, segurança e logs
+
+- Mensagens de erro genéricas em UI. Logs detalhados apenas no server (handlers/actions). Não logar dados sensíveis.
+- Sessão: apenas cookies HttpOnly+Secure+Lax; nunca tokens em localStorage/query.
+- x-request-id: propagar e logar no server; exibir em erros quando útil.
+
+### Runtime
+- Node.js runtime como padrão (handlers usam Node APIs). Edge runtime apenas para rotas públicas simples (sem dependências Node) visando TTFB menor. Para SSO/back-channel, manter Node.
