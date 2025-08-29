@@ -1,4 +1,3 @@
-import { requireMaster, attachAuthHeader } from "@/lib/auth/session"
 import { serverFetchJSON } from "@/lib/server-fetch"
 import type { PaginatedResponse, User, UsersListParams } from "@/lib/types/users"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -13,20 +12,25 @@ import { DataTable } from "@/components/custom/table"
 export const dynamic = 'force-dynamic'
 
 export default async function UsersPage({ searchParams }: { searchParams: UsersListParams }) {
-  await requireMaster()
-  const resp = await serverFetchJSON<PaginatedResponse<User>>({
-    pathname: '/admin/users',
-    method: 'GET',
-    headers: { ...(await attachAuthHeader()) },
-    searchParams: {
-      q: searchParams?.q,
-      page: searchParams?.page ?? 1,
-      pageSize: searchParams?.pageSize ?? 10,
-      sortBy: searchParams?.sortBy ?? 'createdAt',
-      sortDir: searchParams?.sortDir ?? 'desc'
-    }
-  })
-  const data = resp.data ?? { items: [], total: 0, page: 1, pageSize: 10 }
+  // Mock data para demonstração
+  const mockData: PaginatedResponse<User> = {
+    items: [
+      {
+        id: "1",
+        name: "Usuário Exemplo",
+        email: "usuario@exemplo.com",
+        systemRole: "ADMIN",
+        status: "ACTIVE",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }
+    ],
+    total: 1,
+    page: 1,
+    pageSize: 10
+  }
+
+  const data = mockData
   const buildHref = (p: number) => {
     const sp = new URLSearchParams()
     if (searchParams?.q) sp.set('q', String(searchParams.q))

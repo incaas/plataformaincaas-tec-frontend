@@ -16,7 +16,11 @@ export default function AuthenticatedLayout({
 			<AppSidebar />
 			<div className="flex flex-col flex-1">
 				<AppHeader user={user} />
-				<main className="flex-1 overflow-auto p-6">{children}</main>
+				<main className="flex-1 overflow-auto p-6 bg-[#F0F4F9]">
+					<div className="bg-white rounded-xl shadow-sm p-6 min-h-full">
+						{children}
+					</div>
+				</main>
 			</div>
 		</SidebarProvider>
 	)
