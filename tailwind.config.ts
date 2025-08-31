@@ -46,6 +46,19 @@ const config: Config = {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
+  			incaas: {
+  				DEFAULT: '#1A73E8',
+  				'50': '#E8F2FF',
+  				'100': '#D1E5FF',
+  				'200': '#A3CBFF',
+  				'300': '#75B1FF',
+  				'400': '#4797FF',
+  				'500': '#1A73E8',
+  				'600': '#0056CC',
+  				'700': '#004499',
+  				'800': '#003366',
+  				'900': '#002233'
+  			},
   			chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',

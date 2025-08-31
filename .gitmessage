@@ -19,7 +19,7 @@
 # Exemplos:
 #   feat(auth): implementa sistema de login
 #   fix(users): corrige validação de email
-#   refact(ui): extrai componentes reutilizáveis
+#   refact(ui): extrai componentes reutilizáveis7
 
 <type>(<scope>): <subject>
 

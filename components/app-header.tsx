@@ -1,7 +1,7 @@
 "use client"
 
 import { Menu } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/custom/button"
 import { useSidebar } from "@/components/ui/sidebar"
 import Image from "next/image"
 import {
@@ -25,8 +25,8 @@ export function AppHeader({ user }: { user?: { name?: string; email?: string; ro
   }
 
   const getDisplayName = (name?: string, email?: string) => {
-    if (name && name.trim().length > 0) return name
-    return email || "Usuário"
+    if (name && name.trim().length > 0) return name.toUpperCase()
+    return (email || "Usuário").toUpperCase()
   }
 
   const getLabelByRole = (role?: string) => {
@@ -34,7 +34,7 @@ export function AppHeader({ user }: { user?: { name?: string; email?: string; ro
 
     switch (role) {
       case "MASTER":
-        return <span className="text-xs bg-[#1CAAE8] text-white px-2 py-1 rounded-md capitalize">{role.toUpperCase()}</span>
+        return <span className="text-xs bg-incaas text-white px-2 py-1 rounded-md capitalize">{role.toUpperCase()}</span>
       case "OPERADOR":
         return <span className="text-xs bg-green-500 text-white px-2 py-1 rounded-md capitalize">{role.toUpperCase()}</span>
       default:
@@ -69,17 +69,25 @@ export function AppHeader({ user }: { user?: { name?: string; email?: string; ro
         </div>
 
         {/* Informações do usuário */}
-        <div className="mr-4">{getLabelByRole(user.role)}</div>
+        <div className="hidden sm:flex items-center gap-3 mr-4">
+          {getLabelByRole(user.role)}
+          <div className="w-px h-4 bg-gray-300"></div>
+          <span className="text-sm font-medium text-gray-800">
+            Olá, <strong>{getDisplayName(user.name, user.email)}</strong>
+          </span>
+        </div>
+        
+        {/* Role apenas para mobile */}
+        <div className="sm:hidden mr-4">
+          {getLabelByRole(user.role)}
+        </div>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-800">
-                Olá, {getDisplayName(user.name, user.email)}
-              </span>
               <Button variant="ghost" className="relative h-8 w-8 rounded-full hover:bg-[#F0F4F9]/80 border-none">
                 <Avatar className="h-8 w-8">
-                  <AvatarFallback className="bg-[#1CAAE8] text-white">
+                                     <AvatarFallback className="bg-incaas text-white">
                     {getUserInitials(user.name)}
                   </AvatarFallback>
                 </Avatar>
@@ -89,7 +97,7 @@ export function AppHeader({ user }: { user?: { name?: string; email?: string; ro
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <div className="flex items-center justify-start gap-2 p-2">
               <div className="flex flex-col space-y-1 leading-none">
-                <p className="font-medium">{getDisplayName(user.name, user.email)}</p>
+                <p className="font-medium"><strong>{getDisplayName(user.name, user.email)}</strong></p>
                 <p className="w-[200px] truncate text-sm text-muted-foreground">{user.email}</p>
               </div>
             </div>

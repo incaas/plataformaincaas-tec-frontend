@@ -21,9 +21,8 @@ import {
 const menuItems = [
   { 
     title: "Projetos", 
-    url: "/admin", 
-    icon: FolderOpen,
-    isActive: true 
+    url: "/projetos", 
+    icon: FolderOpen
   },
   { 
     title: "Clientes", 
