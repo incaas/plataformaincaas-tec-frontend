@@ -50,29 +50,36 @@ export function AppSidebar() {
                 const isActive = pathname === item.url
                 return (
                   <SidebarMenuItem key={item.title} className="bg-[#F0F4F9] border-none">
-                    <SidebarMenuButton 
-                       asChild 
-                       isActive={isActive} 
-                       className={`border-none ${
-                         isActive 
-                           ? 'bg-[#D9E3FF] text-gray-800 shadow-sm' 
-                           : 'bg-[#F0F4F9] text-gray-700 hover:bg-[#F0F4F9]/80'
-                       }`}
-                     >
-                       <Link 
-                         href={item.url} 
-                         className="flex items-center justify-between w-full px-4 py-3 rounded-lg transition-all duration-200"
-                       >
-                         <div className="flex items-center gap-3">
-                           <item.icon className={`h-5 w-5 ${
-                             isActive ? 'text-gray-800' : 'text-gray-600'
-                           }`} />
-                           <span className={`font-medium ${
-                             isActive ? 'text-gray-800' : 'text-gray-700'
-                           }`}>
-                             {item.title}
-                           </span>
-                         </div>
+                      <SidebarMenuButton 
+                        asChild 
+                        isActive={isActive} 
+                        className="border-none "
+                      >
+                        <Link 
+                          href={item.url} 
+                          className={`flex items-center  justify-between w-full px-8 py-6 transition-all duration-200 ${
+                            isActive 
+                              ? '!bg-[#C5D4EC] !text-black shadow-sm rounded-full' 
+                              : 'bg-transparent text-gray-700 hover:bg-[#F0F4F9]/80 rounded-lg'
+                          }`}
+                          style={isActive ? { backgroundColor: '#C5D4EC', color: '#000000', borderRadius: '9999px' } : {}}
+                        >
+                        <div className="flex items-center gap-3 ">
+                            <item.icon 
+                              className={`h-5 w-5 ${
+                                isActive ? 'text-black' : 'text-gray-600'
+                              }`}
+                              style={isActive ? { color: '#000000' } : {}}
+                            />
+                            <span 
+                              className={`font-medium ${
+                                isActive ? 'text-black' : 'text-gray-700'
+                              }`}
+                              style={isActive ? { color: '#000000' } : {}}
+                            >
+                              {item.title}
+                            </span>
+                          </div>
                        </Link>
                      </SidebarMenuButton>
                   </SidebarMenuItem>

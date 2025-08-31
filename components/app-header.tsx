@@ -34,9 +34,9 @@ export function AppHeader({ user }: { user?: { name?: string; email?: string; ro
 
     switch (role) {
       case "MASTER":
-        return <span className="text-xs bg-incaas text-white px-2 py-1 rounded-md capitalize">{role.toUpperCase()}</span>
+        return <span className="text-xs bg-incaas hover:bg-blue-700 text-white px-2 py-1 rounded-md capitalize transition-colors duration-200 cursor-default">{role.toUpperCase()}</span>
       case "OPERADOR":
-        return <span className="text-xs bg-green-500 text-white px-2 py-1 rounded-md capitalize">{role.toUpperCase()}</span>
+        return <span className="text-xs bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded-md capitalize transition-colors duration-200 cursor-default">{role.toUpperCase()}</span>
       default:
         return null
     }
@@ -46,7 +46,7 @@ export function AppHeader({ user }: { user?: { name?: string; email?: string; ro
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#F0F4F9] backdrop-blur supports-[backdrop-filter]:bg-[#F0F4F9] border-none">
-      <div className="flex h-14 items-center px-4">
+      <div className="flex h-14 items-center px-4 pt-4">
         <Button
           variant="ghost"
           size="icon"
@@ -69,7 +69,7 @@ export function AppHeader({ user }: { user?: { name?: string; email?: string; ro
         </div>
 
         {/* Informações do usuário */}
-        <div className="hidden sm:flex items-center gap-3 mr-4">
+        <div className="hidden sm:flex items-center gap-3 mr-4 select-none">
           {getLabelByRole(user.role)}
           <div className="w-px h-4 bg-gray-300"></div>
           <span className="text-sm font-medium text-gray-800">
@@ -78,7 +78,7 @@ export function AppHeader({ user }: { user?: { name?: string; email?: string; ro
         </div>
         
         {/* Role apenas para mobile */}
-        <div className="sm:hidden mr-4">
+        <div className="sm:hidden mr-4 select-none">
           {getLabelByRole(user.role)}
         </div>
 

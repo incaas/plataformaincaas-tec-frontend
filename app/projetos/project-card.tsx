@@ -1,6 +1,7 @@
 import { Project } from "@/lib/types/projects"
 import { Users, Grid } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface ProjectCardProps {
@@ -11,8 +12,7 @@ interface ProjectCardProps {
 export function ProjectCard({ project, onClick }: ProjectCardProps) {
   return (
     <div
-      className="bg-white rounded-3xl shadow-sm border border-gray-200 p-6 md:p-8 hover:shadow-md transition-shadow cursor-pointer h-64 md:h-72 w-full flex flex-col"
-      onClick={onClick}
+      className="bg-white rounded-3xl shadow-sm border border-gray-200 p-6 md:p-8 hover:shadow-md transition-shadow h-64 md:h-72 w-full flex flex-col group"
     >
       <div className="mb-6 flex-1">
         <div className="flex-shrink-0 mb-4">
@@ -60,7 +60,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
               <p>Desenvolvedores</p>
             </TooltipContent>
           </Tooltip>
-          
+
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="flex items-center gap-2 cursor-help">
@@ -75,10 +75,23 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
             </TooltipContent>
           </Tooltip>
         </div>
-        
-        <svg width="20" height="19" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8.88375 2.63282L13 6.74906H0.5V9.24906H13L8.88375 13.3653L10.6513 15.1328L16.0175 9.76656C16.4862 9.29774 16.7495 8.66197 16.7495 7.99906C16.7495 7.33615 16.4862 6.70038 16.0175 6.23157L10.6513 0.865314L8.88375 2.63282Z" fill="#1A73E8"/>
-        </svg>
+
+        <Link href={`/projetos/${project.id}`}>
+          <svg
+            width="20"
+            height="19"
+            viewBox="0 0 17 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="transition-all duration-200 group-hover:scale-110 group-hover:translate-x-1 cursor-pointer"
+          >
+            <path
+              d="M8.88375 2.63282L13 6.74906H0.5V9.24906H13L8.88375 13.3653L10.6513 15.1328L16.0175 9.76656C16.4862 9.29774 16.7495 8.66197 16.7495 7.99906C16.7495 7.33615 16.4862 6.70038 16.0175 6.23157L10.6513 0.865314L8.88375 2.63282Z"
+              fill="#1A73E8"
+              className="transition-colors duration-200 group-hover:fill-[#1557B0] group-active:fill-[#0D47A1]"
+            />
+          </svg>
+        </Link>
       </div>
     </div>
   )

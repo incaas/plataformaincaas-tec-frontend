@@ -4,10 +4,10 @@ import { useState } from "react"
 
 import { Search, Plus } from "lucide-react"
 import { Project, ProjectFilters, ProjectStatus } from "@/lib/types/projects"
-import { mockProjects, filterOptions } from "@/components/projects/projects"
+import { mockProjects, filterOptions } from "./projects-data"
 import { Button } from "@/components/custom/button"
 import { SimpleSelect } from "@/components/custom/select"
-import { ProjectCard } from "@/components/projects/project-card"
+import { ProjectCard } from "./project-card"
 
 
 const statusTabs: ProjectStatus[] = [
@@ -127,7 +127,6 @@ export default function ProjetosPage() {
            <ProjectCard
              key={project.id}
              project={project}
-             onClick={() => console.log(`Clicou no projeto: ${project.name}`)}
            />
          ))}
        </div>
