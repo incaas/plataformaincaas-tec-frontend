@@ -45,7 +45,7 @@ export function AppSidebar() {
       <SidebarContent className="bg-[#F0F4F9] border-none">
         <SidebarGroup className="bg-[#F0F4F9] border-none">
           <SidebarGroupContent className="bg-[#F0F4F9] border-none">
-            <SidebarMenu className="bg-[#F0F4F9] border-none">
+            <SidebarMenu className="bg-[#F0F4F9] border-none mt-10">
               {menuItems.map((item) => {
                 const isActive = pathname === item.url
                 return (

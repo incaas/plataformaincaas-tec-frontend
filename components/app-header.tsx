@@ -1,6 +1,6 @@
 "use client"
 
-import { Menu } from "lucide-react"
+import { Menu, LogOut, Edit } from "lucide-react"
 import { Button } from "@/components/custom/button"
 import { useSidebar } from "@/components/ui/sidebar"
 import Image from "next/image"
@@ -15,6 +15,20 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 export function AppHeader({ user }: { user?: { name?: string; email?: string; role?: string } }) {
   const { toggleSidebar } = useSidebar()
+
+  const handleLogout = () => {
+    // Função fictícia para logout
+    console.log("Logout realizado")
+    // Aqui você pode adicionar a lógica real de logout
+    // Por exemplo: signOut(), redirect('/login'), etc.
+  }
+
+  const handleEditProfile = () => {
+    // Função fictícia para editar perfil
+    console.log("Editar perfil")
+    // Aqui você pode adicionar a lógica real para abrir modal de edição
+    // Por exemplo: setShowEditModal(true)
+  }
 
   const getUserInitials = (name?: string) => {
     if (!name) return "U"
@@ -102,10 +116,20 @@ export function AppHeader({ user }: { user?: { name?: string; email?: string; ro
               </div>
             </div>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer">
-              <div className="w-full flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Sistema sem autenticação</span>
-              </div>
+            <DropdownMenuItem 
+              className="cursor-pointer"
+              onClick={handleEditProfile}
+            >
+              <Edit className="mr-2 h-4 w-4" />
+              <span>Editar perfil</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem 
+              className="cursor-pointer text-red-600 hover:text-red-700 hover:bg-red-50"
+              onClick={handleLogout}
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Sair</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
