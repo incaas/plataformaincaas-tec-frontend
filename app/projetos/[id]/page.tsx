@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/custom/ta
 import { Card, CardContent } from "@/components/ui/card"
 import { ProjectResponsibleCard } from "../project-responsible-card"
 import { ClientInfoCard } from "../client-info-card"
+import { ProjectNavigation } from "../components/project-navigation"
 import { mockProjects as baseProjects, clientData, responsibles } from "../projects-data"
 
 export default function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -35,13 +36,11 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
   return (
     <div className="space-y-6">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-gray-600">
-        <Link href="/projetos" className="hover:text-gray-900 transition-colors">
-          Projetos
-        </Link>
-                 <ChevronRight className="h-4 w-4" />
-         <span className="text-gray-900 font-medium">{baseProject.name}</span>
-      </div>
+      <ProjectNavigation 
+        projectName={baseProject.name}
+        currentPage=""
+        projectId={resolvedParams.id}
+      />
 
              {/* Hero Section */}
        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 p-8">
@@ -56,10 +55,12 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
               <Button className="bg-[#1A73E8] hover:bg-[#1557B0] text-white px-10 py-6 text-base rounded-full">
                 Acessar Sistema
               </Button>
-              <Button className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 px-6 py-6 text-base rounded-full">
-                <Edit className="h-4 w-4 mr-2" />
-                Ajustar Projeto
-              </Button>
+                             <Link href={`/projetos/editar/${resolvedParams.id}`}>
+                <Button className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 px-6 py-6 text-base rounded-full">
+                  <Edit className="h-4 w-4 mr-2" />
+                  Ajustar Projeto
+                </Button>
+              </Link>
             </div>
          </div>
          <div className="flex-shrink-0">

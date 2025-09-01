@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/custom/button"
 import { X } from "lucide-react"
 import { useState } from "react"
+import { cn } from "@/lib/utils"
 
 type Option = { value: string; label: string }
 
@@ -13,6 +14,7 @@ type Props = {
   label?: string
   placeholder?: string
   defaultValue?: string
+  value?: string
   options: Option[]
   required?: boolean
   errorMsg?: string
@@ -25,6 +27,7 @@ export const SelectField = ({
   label, 
   placeholder = 'Selecione', 
   defaultValue, 
+  value,
   options, 
   required, 
   errorMsg,
@@ -33,15 +36,15 @@ export const SelectField = ({
 }: Props) => {
   const id = name
   const hasError = Boolean(errorMsg)
-  const [value, setValue] = useState(defaultValue || "")
+  
+  // Usar value da prop se fornecido, senão usar defaultValue
+  const currentValue = value !== undefined ? value : (defaultValue || "")
 
   const handleValueChange = (newValue: string) => {
-    setValue(newValue)
     onValueChange?.(newValue)
   }
 
   const handleClear = () => {
-    setValue("")
     onValueChange?.("")
   }
 
@@ -59,11 +62,21 @@ export const SelectField = ({
       <div className="relative">
         <Select 
           name={name} 
-          value={value} 
+          value={currentValue} 
           onValueChange={handleValueChange}
           required={required}
         >
-          <SelectTrigger id={id} aria-invalid={hasError} aria-describedby={hasError ? `${id}-error` : undefined}>
+          <SelectTrigger 
+            id={id} 
+            aria-invalid={hasError} 
+            aria-describedby={hasError ? `${id}-error` : undefined}
+                         className={cn(
+               "border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500",
+               hasError 
+                 ? "border-red-300 focus:border-red-500 focus:ring-red-500" 
+                 : ""
+             )}
+          >
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>
           <SelectContent>
@@ -72,7 +85,7 @@ export const SelectField = ({
             ))}
           </SelectContent>
         </Select>
-        {allowClear && value && (
+        {allowClear && currentValue && (
           <Button
             type="button"
             variant="ghost"
@@ -110,15 +123,11 @@ export const SimpleSelect = ({
   className,
   allowClear = true
 }: SimpleSelectProps) => {
-  const [internalValue, setInternalValue] = useState(value || "")
-
   const handleValueChange = (newValue: string) => {
-    setInternalValue(newValue)
     onValueChange?.(newValue)
   }
 
   const handleClear = () => {
-    setInternalValue("")
     onValueChange?.("")
   }
 
@@ -127,8 +136,13 @@ export const SimpleSelect = ({
 
   return (
     <div className="relative">
-      <Select value={internalValue} onValueChange={handleValueChange}>
-        <SelectTrigger className={className}>
+      <Select value={value || ""} onValueChange={handleValueChange}>
+        <SelectTrigger 
+          className={cn(
+            "border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500",
+            className
+          )}
+        >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
@@ -137,7 +151,7 @@ export const SimpleSelect = ({
           ))}
         </SelectContent>
       </Select>
-      {allowClear && internalValue && (
+      {allowClear && value && (
         <Button
           type="button"
           variant="ghost"

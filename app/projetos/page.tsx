@@ -1,11 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 
 import { Search, Plus } from "lucide-react"
 import { Project, ProjectFilters, ProjectStatus } from "@/lib/types/projects"
 import { mockProjects, filterOptions } from "./projects-data"
 import { Button } from "@/components/custom/button"
+import { Input } from "@/components/custom/input"
 import { SimpleSelect } from "@/components/custom/select"
 import { ProjectCard } from "./project-card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/custom/tabs"
@@ -49,10 +51,12 @@ export default function ProjetosPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl sm:text-3xl font-bold text-[#1e3a8a]">Projetos</h1>
-        <Button className="flex items-center gap-2 w-full sm:w-auto">
-          <Plus className="h-4 w-4" />
-          Criar Projeto
-        </Button>
+        <Link href="/projetos/criar">
+          <Button className="flex items-center gap-2 w-full sm:w-auto">
+            <Plus className="h-4 w-4" />
+            Criar Projeto
+          </Button>
+        </Link>
       </div>
 
       {/* Navigation Tabs */}
@@ -70,14 +74,14 @@ export default function ProjetosPage() {
 
       <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
         <div className="flex items-center gap-4 w-full lg:w-auto">
-          <div className="relative flex-1 lg:flex-none">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <input
+          <div className="flex-1 lg:flex-none">
+            <Input
               type="text"
               placeholder="Pesquisar..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 w-full lg:w-64 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              icon={<Search className="h-4 w-4 text-gray-400" />}
+              className="w-full lg:w-64"
             />
           </div>
         </div>
